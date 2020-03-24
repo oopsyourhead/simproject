@@ -185,6 +185,7 @@ print("The scan speed was: ", scanspeed_output, file = f)
 f.close()
 
 #power check implemented and working
+#next make target settings it's own file and import it, maybe make scenario control it's own file then impoort
 #maybe next implement speed/mtr filter, scan multiple times in a row
 
 #in the future implement beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes
