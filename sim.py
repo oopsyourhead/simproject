@@ -1,4 +1,18 @@
+################################################################################################################################################################
+#   Developer           Date            Version             Comment
+#   Sean Tatarka        03/23/2020      0001                Initial commit, 1 dimension scan, map center, scan speed, power threshold implemented
+#
+#
+#
+#
+#
+#
+#
+#################################################################################################################################################################
+
 #SETUP
+f = open('output.txt', 'w')
+
 NORMAL_SCAN = 0
 HIGH_PRF_AIR_TO_AIR_SEARCH = 1
 MED_PRF_AIR_TO_AIR_SEARCH = 2
@@ -97,16 +111,22 @@ if scan_direction != 1:
     scan_swath.reverse()
 
 print('scan_boundry_left: ', scan_boundry_left)
+print('scan_boundry_left: ', scan_boundry_left, file = f)
 print('scan_boundry_right: ', scan_boundry_right)
+print('scan_boundry_right: ', scan_boundry_right, file = f)
 print('')
+
+f = open('output.txt', 'w')
 
 i = 0
 
 while ((i < len(scan_swath)) & (i >= 0)):
-        print(scan_swath[i], "\t", end ="", flush=True)
-        i += scanspeed
+    print(scan_swath[i], "\t", end ="", flush=True)
+    print(scan_swath[i], "\t", end ="", flush=True, file = f)
+    i += scanspeed
 
 print("")
+print("", file = f)
 
 a = 0
 
@@ -115,16 +135,19 @@ while ((current_scan_location <= scan_boundry_right) and (current_scan_location 
         while (a < len(target_power)): 
             if target_locations[a] == current_scan_location and target_power[a] >= DETECTION_THRESHOLD:
                 print('#',"\t", end="", flush=True)
+                print('#',"\t", end="", flush=True, file = f)
                 a += 1
                 break
             elif target_locations[a] == current_scan_location and target_power[a] < DETECTION_THRESHOLD:
                 print('=', "\t", end="", flush=True)
+                print('=', "\t", end="", flush=True, file = f)
                 a += 1
                 break
             else:
                 a += 1
     else:
         print('=', "\t", end="", flush=True)
+        print('=', "\t", end="", flush=True, file = f)
 
                 
     if scan_direction == 1:
@@ -144,16 +167,22 @@ scanspeed_output = scanspeed
 ###############################################################
 
 print("")
+print("", file = f)
 #print("len(range)-1", len(range)-1)
 #print("i = ", i)
 #print("i-scanspeed=",i-scanspeed)
 #print("(i-scanspeed)%scanspeed = ", (i-scanspeed)%scanspeed)
 print("Target Location Is: ", target_location_output)
+print("Target Location Is: ", target_location_output, file = f)
 print("Target Powers Are: ", target_power_output)
+print("Target Powers Are: ", target_power_output, file = f)
 print("The scan speed was: ", scanspeed_output)
+print("The scan speed was: ", scanspeed_output, file = f)
 #print(target_power[0])
 #print(target_power[1])
 #print(target_power[2])
+
+f.close()
 
 #power check implemented and working
 #maybe next implement speed/mtr filter, scan multiple times in a row
