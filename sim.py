@@ -11,6 +11,9 @@
 #################################################################################################################################################################
 
 #SETUP
+from targets import Target
+
+
 f = open('output.txt', 'w')
 
 NORMAL_SCAN = 0
@@ -24,34 +27,7 @@ DETECTION_THRESHOLD = 50
 
 
 #helper functions and classes
-class Target:
-    def __init__(self, location, speed, power):
-        self.location = location
-        self.speed = speed
-        self.power = power
 
-    def change_location(self, new_location):
-        self.location = new_location
-        target_locations = [o.location for o in target_list]
-
-    def change_power(self, new_power):
-        self.power = new_power
-        target_power = [o.power for o in target_list]
-        return target_power
-
-    def change_speed(self, new_speed):
-        self.speed = new_speed
-        target_speeds = [o.speed for o in target_list]
-        return target_speeds
-
-#def check_power(target_power, power_threshold):
-#    x = 0 
-#    while x < (len(target_power)-1):
-#        if power_threshold >= target_power[x]:
-#            return False
-#       else:
-#           return True
-#   x += 1
             
 
 #Scenario
@@ -61,7 +37,7 @@ target_3 = Target(9, 0, 100)
 
 target_list = [target_1, target_2, target_3]
 
-#target_1.change_location(-1)
+
 #target_2.change_power(75)
 
 target_locations = [o.location for o in target_list]
@@ -104,8 +80,10 @@ else:
     scan_boundry_right = mapcenter + scanwidth
     
 scan_swath = list(range(scan_boundry_left, scan_boundry_right + 1))
-target_power = target_2.change_power(10)
-target_power = target_3.change_power(50)
+
+target_power = target_2.change_power(10, target_list)
+target_power = target_3.change_power(50, target_list)
+target_locations = target_1.change_location(-5, target_list)
 
 if scan_direction != 1:
     scan_swath.reverse()
@@ -172,8 +150,8 @@ print("", file = f)
 #print("i = ", i)
 #print("i-scanspeed=",i-scanspeed)
 #print("(i-scanspeed)%scanspeed = ", (i-scanspeed)%scanspeed)
-print("Target Location Is: ", target_location_output)
-print("Target Location Is: ", target_location_output, file = f)
+print("Target Locations Are: ", target_location_output)
+print("Target Locations Are: ", target_location_output, file = f)
 print("Target Powers Are: ", target_power_output)
 print("Target Powers Are: ", target_power_output, file = f)
 print("The scan speed was: ", scanspeed_output)
