@@ -1,14 +1,14 @@
-################################################################################################################################################################
+############################################################################################################################################################################
 #   Developer           Date            Version             Comment
 #   Sean Tatarka        03/23/2020      0001                Initial commit, 1 dimension scan, map center, scan speed, power threshold implemented
+#   Sean Tatarka        03/25/2020      0002                Added the ability to scan multiple "bars", only 1 dimension so it's just left-right and right-left each time
 #
 #
 #
 #
 #
 #
-#
-#################################################################################################################################################################
+#############################################################################################################################################################################
 
 #SETUP
 from targets import Target
@@ -19,23 +19,28 @@ f = open('output.txt', 'w')
 
 ###########################CC INPUTS################################
 #########################Interface########################
+##########################Modes######################
 NORMAL_SCAN = 0
 HIGH_PRF_AIR_TO_AIR_SEARCH = 1
 MED_PRF_AIR_TO_AIR_SEARCH = 2
 INTLV_AIR_TO_AIR_SEARCH = 3
 STT = 4
 TWS = 5
-DETECTION_THRESHOLD = 50
 
 
+######################Mapping Controls#########################
 mapcenter = 11
-scanwidth = 16
-scanspeed = 2
+scanwidth = 10
+scanspeed = 1
 scan_direction = 1         #1 = left to right, 2 = right to left
-number_of_scans = 5
+number_of_scans = 3
 elevation_angle = 0
-radar_mode = 0
+
+
+######################Radar execution controls#####################
+radar_mode = NORMAL_SCAN
 mtr_setting = 0
+detection_threshold = 50
 
 ##############################CC OUTPUTS##################################
 current_scan_number = 1
@@ -49,7 +54,7 @@ current_scan_number = 1
 
 ######################Scenario###############################################
 target_1 = Target(1, 0, 100)
-target_2 = Target(-3, 0, 100)
+target_2 = Target(5, 0, 100)
 target_3 = Target(9, 0, 100)
 
 target_list = [target_1, target_2, target_3]
@@ -111,12 +116,12 @@ while current_scan_number <= number_of_scans :
     while ((current_scan_location <= scan_boundry_right) and (current_scan_location >= scan_boundry_left)):
         if (current_scan_location in target_locations):
             while (a < len(target_power)): 
-                if target_locations[a] == current_scan_location and target_power[a] >= DETECTION_THRESHOLD:
+                if target_locations[a] == current_scan_location and target_power[a] >= detection_threshold:
                     print('#',"\t", end="", flush=True)
                     print('#',"\t", end="", flush=True, file = f)
                     a += 1
                     break
-                elif target_locations[a] == current_scan_location and target_power[a] < DETECTION_THRESHOLD:
+                elif target_locations[a] == current_scan_location and target_power[a] < detection_threshold:
                     print('=', "\t", end="", flush=True)
                     print('=', "\t", end="", flush=True, file = f)
                     a += 1
@@ -141,14 +146,16 @@ while current_scan_number <= number_of_scans :
     else:
         scan_direction = 1
 
-    ###############OUTPUTS#########################################
+##################OUTPUTS#########################################
 
     target_location_output = target_locations 
     target_power_output = target_power
     current_scan_location_output = current_scan_location
     scanspeed_output = scanspeed
+    current_scan_number_output = current_scan_number
+    radar_mode_output = radar_mode
 
-    #############PRINTING##################################################
+################PRINTING##################################################
 
     print("")
     print("", file = f)
@@ -156,6 +163,8 @@ while current_scan_number <= number_of_scans :
     #print("i = ", i)
     #print("i-scanspeed=",i-scanspeed)
     #print("(i-scanspeed)%scanspeed = ", (i-scanspeed)%scanspeed)
+    print("The current Radar Mode is: ", radar_mode_output)
+    print("The current Radar Mode is: ", radar_mode_output, file = f)
     print("Target Locations Are: ", target_location_output)
     print("Target Locations Are: ", target_location_output, file = f)
     print("Target Powers Are: ", target_power_output)
@@ -165,7 +174,9 @@ while current_scan_number <= number_of_scans :
     print("", file = f)
     print("")
 
-    
+
+#################UPDATE TARGETS FOR NEXT SCAN################################
+
     target_power = target_2.change_power(10, target_list)
     target_power = target_3.change_power(50, target_list)
     target_locations = target_1.change_location(-5, target_list)
@@ -178,7 +189,7 @@ while current_scan_number <= number_of_scans :
 f.close()
 
 #power check implemented and working
-#next make target settings it's own file and import it, maybe make scenario control it's own file then impoort
-#maybe next implement speed/mtr filter, scan multiple times in a row
+#next  maybe make scenario control it's own file then import
+#maybe next implement speed/mtr filter
 
 #in the future implement beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes
