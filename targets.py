@@ -11,8 +11,8 @@ class Target:
 
     def change_power(self, new_power, target_list):
         self.power = new_power
-        target_power = [o.power for o in target_list]
-        return target_power
+        target_powers = [o.power for o in target_list]
+        return target_powers
 
     def change_speed(self, new_speed, target_list):
         self.speed = new_speed
