@@ -2,7 +2,7 @@
 #   Developer           Date            Version             Comment
 #   Sean Tatarka        03/23/2020      0001                Initial commit, 1 dimension scan, map center, scan speed, power threshold implemented
 #   Sean Tatarka        03/25/2020      0002                Added the ability to scan multiple "bars", only 1 dimension so it's just left-right and right-left each time
-#
+#   Sean Tatarka        03/27/2020      0003                Added MTR filtering based on target velocity, which takes heading into account. Added initial logging capability
 #
 #
 #
@@ -12,9 +12,14 @@
 
 #SETUP
 from targets import Target
+import math, os
 
 
 f = open('output.txt', 'w')
+f2 = open('log.txt', 'w')
+f2.write("")
+f2.close()
+
 
 
 ###########################CC INPUTS################################
@@ -49,24 +54,27 @@ current_scan_number = 1
 
 
 #######################helper functions and classes###############################
-
+def calc_velocities(target_speeds, target_headings):
+    target_velocities = []
+    target_velocities.append(math.fabs(target_1.speed * math.cos(math.radians(target_1.heading))))
+    target_velocities.append(math.fabs(target_2.speed * math.cos(math.radians(target_2.heading))))
+    target_velocities.append(math.fabs(target_3.speed * math.cos(math.radians(target_3.heading))))
+    return target_velocities
             
 
 ######################Scenario###############################################
-target_1 = Target(1, 0, 100)
-target_2 = Target(5, 50, 100)
-target_3 = Target(9, 0, 100)
+target_1 = Target("target_1", 1, 0, 0, 100)
+target_2 = Target("target_2", 5, 50, 180, 100)
+target_3 = Target("target_3", 9, 0, 90, 100)
 
 target_list = [target_1, target_2, target_3]
 
+target_names = [o.name for o in target_list]
 target_locations = [o.location for o in target_list]
 target_powers = [o.power for o in target_list]
 target_speeds = [o.speed for o in target_list]
+target_headings = [o.heading for o in target_list]
 
-#target_locations = []
-#target_locations.append(target_1.location)
-#target_locations.append(target_2.location)
-#target_locations.append(target_3.location)
 
 beam_width = 5.0
 half_power_beam_width = beam_width / 2
@@ -76,6 +84,9 @@ half_power_beam_width = beam_width / 2
 while current_scan_number <= number_of_scans :
     print("the current bar # is: ",current_scan_number)
     print("the current bar # is: ",current_scan_number, file = f)
+
+    target_velocities = calc_velocities(target_speeds, target_headings)
+    targets_detected = []
 
     if (scan_direction == 1):
         starting_scan_location = mapcenter - scanwidth
@@ -116,17 +127,18 @@ while current_scan_number <= number_of_scans :
     while ((current_scan_location <= scan_boundry_right) and (current_scan_location >= scan_boundry_left)):
         if (current_scan_location in target_locations):
             while (a < len(target_powers)): 
-                if target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_speeds[a] >= mtr_setting:
+                if target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_velocities[a] >= mtr_setting:
                     print('#',"\t", end="", flush=True)
                     print('#',"\t", end="", flush=True, file = f)
+                    targets_detected.append(current_scan_location)
                     a += 1
                     break
-                elif target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_speeds[a] < mtr_setting:
+                elif target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_velocities[a] < mtr_setting:
                     print('=', "\t", end="", flush=True)
                     print('=', "\t", end="", flush=True, file = f)
                     a += 1
                     break                     
-                elif target_locations[a] == current_scan_location and (target_powers[a] < detection_threshold or target_speeds[a] < mtr_setting):
+                elif target_locations[a] == current_scan_location and (target_powers[a] < detection_threshold or target_velocities[a] < mtr_setting):
                     print('=', "\t", end="", flush=True)
                     print('=', "\t", end="", flush=True, file = f)
                     a += 1
@@ -156,10 +168,14 @@ while current_scan_number <= number_of_scans :
     target_location_output = target_locations 
     target_powers_output = target_powers
     target_speeds_output = target_speeds
+    target_headings_output = target_headings
+    target_velocities_output = target_velocities
     current_scan_location_output = current_scan_location
     scanspeed_output = scanspeed
     current_scan_number_output = current_scan_number
     radar_mode_output = radar_mode
+    targets_detected.sort()
+    targets_detected_output = targets_detected
 
 ################PRINTING##################################################
 
@@ -177,18 +193,26 @@ while current_scan_number <= number_of_scans :
     print("Target Powers Are: ", target_powers_output, file = f)
     print("Target Speeds are: ", target_speeds_output)
     print("Target Speeds are: ", target_speeds_output, file = f)
-    print("The scan speed was: ", scanspeed_output)
-    print("The scan speed was: ", scanspeed_output, file = f)
+    print("Target Headings are: ", target_headings_output)
+    print("Target Headings are: ", target_headings_output, file = f)
+    print("Target Velocities are: ", target_velocities_output)
+    print("Target Velocities are: ", target_velocities_output, file = f)
+    print("Targets were detected in these locations: ", targets_detected_output)
+    print("Targets were detected in these locations: ", targets_detected_output, file = f)
+    #print("The scan speed was: ", scanspeed_output)
+    #print("The scan speed was: ", scanspeed_output, file = f)
     print("", file = f)
     print("")
 
 
 #################UPDATE TARGETS FOR NEXT SCAN################################
 
-    target_powers = target_1.change_power(10, target_list)
+    target_powers = target_1.change_power(90, target_list)
     target_powers = target_2.change_power(50, target_list)
     target_locations = target_2.change_location(7, target_list)
     target_speeds = target_2.change_speed(75, target_list)
+    target_speeds = target_1.change_speed(120, target_list)
+    target_headings = target_1.change_heading(15, target_list)
 
     current_scan_number += 1
 #print(target_powers[0])

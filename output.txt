@@ -7,27 +7,33 @@ The current Radar Mode is:  0
 Target Locations Are:  [1, 5, 9]
 Target Powers Are:  [100, 100, 100]
 Target Speeds are:  [0, 50, 0]
-The scan speed was:  1
+Target Headings are:  [0, 180, 90]
+Target Velocities are:  [0.0, 50.0, 0.0]
+Targets were detected in these locations:  [5]
 
 the current bar # is:  2
 scan_boundry_left:  1
 scan_boundry_right:  21
 21 	20 	19 	18 	17 	16 	15 	14 	13 	12 	11 	10 	9 	8 	7 	6 	5 	4 	3 	2 	1 	
-= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	# 	= 	= 	= 	= 	= 	= 	
+= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	# 	= 	= 	= 	= 	= 	# 	
 The current Radar Mode is:  0
 Target Locations Are:  [1, 7, 9]
-Target Powers Are:  [10, 50, 100]
-Target Speeds are:  [0, 75, 0]
-The scan speed was:  1
+Target Powers Are:  [90, 50, 100]
+Target Speeds are:  [120, 75, 0]
+Target Headings are:  [15, 180, 90]
+Target Velocities are:  [115.9110991546882, 75.0, 0.0]
+Targets were detected in these locations:  [1, 7]
 
 the current bar # is:  3
 scan_boundry_left:  1
 scan_boundry_right:  21
 1 	2 	3 	4 	5 	6 	7 	8 	9 	10 	11 	12 	13 	14 	15 	16 	17 	18 	19 	20 	21 	
-= 	= 	= 	= 	= 	= 	# 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	
+# 	= 	= 	= 	= 	= 	# 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	= 	
 The current Radar Mode is:  0
 Target Locations Are:  [1, 7, 9]
-Target Powers Are:  [10, 50, 100]
-Target Speeds are:  [0, 75, 0]
-The scan speed was:  1
+Target Powers Are:  [90, 50, 100]
+Target Speeds are:  [120, 75, 0]
+Target Headings are:  [15, 180, 90]
+Target Velocities are:  [115.9110991546882, 75.0, 0.0]
+Targets were detected in these locations:  [1, 7]
 
