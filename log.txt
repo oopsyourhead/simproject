@@ -1,3 +1,12 @@
-target_1 has been created at  04:08:01 . 44201   PM
-target_2 has been created at  04:08:01 . 44701   PM
-target_3 has been created at  04:08:01 . 45202   PM
+14:38:27.855624: target_1 has been created
+14:38:27.856125: target_2 has been created
+14:38:27.856625: target_3 has been created
+14:38:27.856625: the current bar # is:  1
+14:38:27.857625: target_1 Power Changed To 90
+14:38:27.858125: target_2 Power Changed To 50
+14:38:27.858125: target_2 Location Changed To 7
+14:38:27.858625: target_2 Speed Changed To 75
+14:38:27.859125: target_1 Speed Changed To 120
+14:38:27.859125: target_1 Heading Changed To 15
+14:38:27.859625: the current bar # is:  2
+14:38:27.860626: the current bar # is:  3

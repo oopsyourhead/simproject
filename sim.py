@@ -3,7 +3,7 @@
 #   Sean Tatarka        03/23/2020      0001                Initial commit, 1 dimension scan, map center, scan speed, power threshold implemented
 #   Sean Tatarka        03/25/2020      0002                Added the ability to scan multiple "bars", only 1 dimension so it's just left-right and right-left each time
 #   Sean Tatarka        03/27/2020      0003                Added MTR filtering based on target velocity, which takes heading into account. Added initial logging capability
-#
+#   Sean Tatarka        03/30/2020      0004                Updated class function calls to include object names to support logging functions
 #
 #
 #
@@ -12,7 +12,7 @@
 
 #SETUP
 from targets import Target
-import math, os
+import math, os, datetime
 
 
 f = open('output.txt', 'w')
@@ -81,9 +81,15 @@ half_power_beam_width = beam_width / 2
 
 
 ##################SCAN EXECUTION#############################
-while current_scan_number <= number_of_scans :
+while current_scan_number <= number_of_scans:
+    daytime = datetime.datetime.now()
+
     print("the current bar # is: ",current_scan_number)
     print("the current bar # is: ",current_scan_number, file = f)
+
+    f2 = open('log.txt', 'a')
+    print(daytime.strftime("%H:%M:%S.%f:"), "the current bar # is: ", current_scan_number, file = f2)
+    f2.close()
 
     target_velocities = calc_velocities(target_speeds, target_headings)
     targets_detected = []
@@ -133,11 +139,11 @@ while current_scan_number <= number_of_scans :
                     targets_detected.append(current_scan_location)
                     a += 1
                     break
-                elif target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_velocities[a] < mtr_setting:
-                    print('=', "\t", end="", flush=True)
-                    print('=', "\t", end="", flush=True, file = f)
-                    a += 1
-                    break                     
+                #elif target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_velocities[a] < mtr_setting:
+                #    print('=', "\t", end="", flush=True)
+                #    print('=', "\t", end="", flush=True, file = f)
+                #    a += 1
+                #    break                     
                 elif target_locations[a] == current_scan_location and (target_powers[a] < detection_threshold or target_velocities[a] < mtr_setting):
                     print('=', "\t", end="", flush=True)
                     print('=', "\t", end="", flush=True, file = f)
@@ -181,10 +187,6 @@ while current_scan_number <= number_of_scans :
 
     print("")
     print("", file = f)
-    #print("len(range)-1", len(range)-1)
-    #print("i = ", i)
-    #print("i-scanspeed=",i-scanspeed)
-    #print("(i-scanspeed)%scanspeed = ", (i-scanspeed)%scanspeed)
     print("The current Radar Mode is: ", radar_mode_output)
     print("The current Radar Mode is: ", radar_mode_output, file = f)
     print("Target Locations Are: ", target_location_output)
@@ -207,12 +209,12 @@ while current_scan_number <= number_of_scans :
 
 #################UPDATE TARGETS FOR NEXT SCAN################################
 
-    target_powers = target_1.change_power(90, target_list)
-    target_powers = target_2.change_power(50, target_list)
-    target_locations = target_2.change_location(7, target_list)
-    target_speeds = target_2.change_speed(75, target_list)
-    target_speeds = target_1.change_speed(120, target_list)
-    target_headings = target_1.change_heading(15, target_list)
+    target_powers = target_1.change_power(90, target_list, target_1.name)
+    target_powers = target_2.change_power(50, target_list, target_2.name)
+    target_locations = target_2.change_location(7, target_list, target_2.name)
+    target_speeds = target_2.change_speed(75, target_list, target_2.name)
+    target_speeds = target_1.change_speed(120, target_list, target_1.name)
+    target_headings = target_1.change_heading(15, target_list, target_1.name)
 
     current_scan_number += 1
 #print(target_powers[0])
@@ -223,7 +225,7 @@ f.close()
 
 #power check implemented and working
 #next  maybe make scenario control it's own file then import
-#maybe next implement speed/mtr filter (started 3/27/20202)
+#maybe next implement speed/mtr filter (finished 3/27/2020)
 #add log that records when target characteristics are changed
 
 #in the future implement beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes
