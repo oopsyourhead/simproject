@@ -4,7 +4,7 @@
 #   Sean Tatarka        03/25/2020      0002                Added the ability to scan multiple "bars", only 1 dimension so it's just left-right and right-left each time
 #   Sean Tatarka        03/27/2020      0003                Added MTR filtering based on target velocity, which takes heading into account. Added initial logging capability
 #   Sean Tatarka        03/30/2020      0004                Updated class function calls to include object names to support logging functions
-#
+#   Sean Tatarka        03/31/2020      0005                Added Aircraft class objects, incorporated aircraft heading and mode into target detection
 #
 #
 #
@@ -12,6 +12,7 @@
 
 #SETUP
 from targets import Target
+from aircraft import Aircraft
 import math, os, datetime
 
 
@@ -25,10 +26,10 @@ f2.close()
 ###########################CC INPUTS################################
 #########################Interface########################
 ##########################Modes######################
-NORMAL_SCAN = 0
-HIGH_PRF_AIR_TO_AIR_SEARCH = 1
-MED_PRF_AIR_TO_AIR_SEARCH = 2
-INTLV_AIR_TO_AIR_SEARCH = 3
+NORMAL_SCAN = 0                     #normal scan is a placeholder mode, doesn't use any of the mode drawbacks, just raw inputs and outputs
+HIGH_PRF_AIR_TO_AIR_SEARCH = 1      #High PRF Search cannot detect trailing targets (those tha have the same headed as the aircraft)
+MED_PRF_AIR_TO_AIR_SEARCH = 2       #Med PRF search can detect all targets, leading or trailing, but has a lower detection threshold
+INTLV_AIR_TO_AIR_SEARCH = 3         #Interleave search mixes Med and High PRF's, so the advantages and drawbacks match up with each scan
 STT = 4
 TWS = 5
 
@@ -43,7 +44,7 @@ elevation_angle = 0
 
 
 ######################Radar execution controls#####################
-radar_mode = NORMAL_SCAN
+radar_mode = HIGH_PRF_AIR_TO_AIR_SEARCH
 mtr_setting = 20
 detection_threshold = 50
 
@@ -54,18 +55,29 @@ current_scan_number = 1
 
 
 #######################helper functions and classes###############################
-def calc_velocities(target_speeds, target_headings):
+###Consider putting a loop here so no matter the number of targets, it will run
+def calc_velocities(target_speeds, target_headings, aircraft_heading):  #calculates velocity based on target speed and the heading difference
     target_velocities = []
-    target_velocities.append(math.fabs(target_1.speed * math.cos(math.radians(target_1.heading))))
-    target_velocities.append(math.fabs(target_2.speed * math.cos(math.radians(target_2.heading))))
-    target_velocities.append(math.fabs(target_3.speed * math.cos(math.radians(target_3.heading))))
+    target_velocities.append(math.fabs(target_1.speed * math.cos(math.radians(aircraft_heading - target_1.heading))))
+    target_velocities.append(math.fabs(target_2.speed * math.cos(math.radians(aircraft_heading - target_2.heading))))
+    target_velocities.append(math.fabs(target_3.speed * math.cos(math.radians(aircraft_heading - target_3.heading))))
     return target_velocities
+
+def calc_heading_difference(target_headings, aircraft_heading):         #calculates heading difference between targets and aircraft
+    heading_differences = []
+    heading_differences.append(math.fabs(aircraft_heading - target_1.heading))
+    heading_differences.append(math.fabs(aircraft_heading - target_2.heading))
+    heading_differences.append(math.fabs(aircraft_heading - target_3.heading))
+    return heading_differences
+
             
 
 ######################Scenario###############################################
-target_1 = Target("target_1", 1, 0, 0, 100)
+target_1 = Target("target_1", 1, 0, 0, 100)                     #(name, location, speed, heading, power)
 target_2 = Target("target_2", 5, 50, 180, 100)
 target_3 = Target("target_3", 9, 0, 90, 100)
+
+aircraft_1 = Aircraft("aircraft_1", 180, 100, 10000, 0)           #(name, heading, speed altitude, ownship_location)
 
 target_list = [target_1, target_2, target_3]
 
@@ -91,7 +103,8 @@ while current_scan_number <= number_of_scans:
     print(daytime.strftime("%H:%M:%S.%f:"), "the current bar # is: ", current_scan_number, file = f2)
     f2.close()
 
-    target_velocities = calc_velocities(target_speeds, target_headings)
+    target_velocities = calc_velocities(target_speeds, target_headings, aircraft_1.heading)
+    heading_differences = calc_heading_difference(target_headings, aircraft_1.heading)
     targets_detected = []
 
     if (scan_direction == 1):
@@ -130,10 +143,13 @@ while current_scan_number <= number_of_scans:
 
     a = 0
 
+#This section needs to be double checked, it seems to be working, but need to make sure all cases are accounted for
     while ((current_scan_location <= scan_boundry_right) and (current_scan_location >= scan_boundry_left)):
         if (current_scan_location in target_locations):
             while (a < len(target_powers)): 
-                if target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_velocities[a] >= mtr_setting:
+                if (target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and target_velocities[a] >= mtr_setting    #speed filtering
+                    and ((heading_differences[a] >= 15 and (radar_mode == HIGH_PRF_AIR_TO_AIR_SEARCH)                                                   #heading check in high PRF
+                    or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH or radar_mode == NORMAL_SCAN))):                                                         #modes
                     print('#',"\t", end="", flush=True)
                     print('#',"\t", end="", flush=True, file = f)
                     targets_detected.append(current_scan_location)
@@ -144,7 +160,8 @@ while current_scan_number <= number_of_scans:
                 #    print('=', "\t", end="", flush=True, file = f)
                 #    a += 1
                 #    break                     
-                elif target_locations[a] == current_scan_location and (target_powers[a] < detection_threshold or target_velocities[a] < mtr_setting):
+                elif target_locations[a] == current_scan_location and (target_powers[a] < detection_threshold or target_velocities[a] < mtr_setting
+                    or heading_differences[a] < 15):
                     print('=', "\t", end="", flush=True)
                     print('=', "\t", end="", flush=True, file = f)
                     a += 1
@@ -175,6 +192,7 @@ while current_scan_number <= number_of_scans:
     target_powers_output = target_powers
     target_speeds_output = target_speeds
     target_headings_output = target_headings
+    heading_differences_output = heading_differences
     target_velocities_output = target_velocities
     current_scan_location_output = current_scan_location
     scanspeed_output = scanspeed
@@ -195,8 +213,12 @@ while current_scan_number <= number_of_scans:
     print("Target Powers Are: ", target_powers_output, file = f)
     print("Target Speeds are: ", target_speeds_output)
     print("Target Speeds are: ", target_speeds_output, file = f)
+    print("Current Aircraft Heading is: ", aircraft_1.heading)
+    print("Current Aircraft Heading is: ", aircraft_1.heading, file = f)
     print("Target Headings are: ", target_headings_output)
     print("Target Headings are: ", target_headings_output, file = f)
+    print("Target Heading Differences are: ", heading_differences_output)
+    print("Target Heading Differences are: ", heading_differences_output, file = f)
     print("Target Velocities are: ", target_velocities_output)
     print("Target Velocities are: ", target_velocities_output, file = f)
     print("Targets were detected in these locations: ", targets_detected_output)

@@ -26,9 +26,9 @@ class Target:
 
         f2.close()
 
-        self.location = location
+        self.location = location                            #right now location is 1 dimension
         self.speed = speed
-        self.heading = heading
+        self.heading = heading                              #heading is in degrees
         self.power = power
         self.name = name
 
