@@ -10,6 +10,7 @@ Target Speeds are:  [0, 50, 0]
 Current Aircraft Heading is:  180
 Target Headings are:  [0, 180, 90]
 Target Heading Differences are:  [180.0, 0.0, 90.0]
+MTR Setting is:  20
 Target Velocities are:  [0.0, 50.0, 0.0]
 Targets were detected in these locations:  []
 
@@ -22,10 +23,11 @@ The current Radar Mode is:  1
 Target Locations Are:  [1, 7, 9]
 Target Powers Are:  [90, 50, 100]
 Target Speeds are:  [120, 75, 0]
-Current Aircraft Heading is:  180
+Current Aircraft Heading is:  90
 Target Headings are:  [15, 180, 90]
-Target Heading Differences are:  [165.0, 0.0, 90.0]
-Target Velocities are:  [115.91109915468819, 75.0, 0.0]
+Target Heading Differences are:  [75.0, 90.0, 0.0]
+MTR Setting is:  20
+Target Velocities are:  [31.05828541230249, 4.592425496802574e-15, 0.0]
 Targets were detected in these locations:  [1]
 
 the current bar # is:  3
@@ -37,9 +39,10 @@ The current Radar Mode is:  1
 Target Locations Are:  [1, 7, 9]
 Target Powers Are:  [90, 50, 100]
 Target Speeds are:  [120, 75, 0]
-Current Aircraft Heading is:  180
+Current Aircraft Heading is:  90
 Target Headings are:  [15, 180, 90]
-Target Heading Differences are:  [165.0, 0.0, 90.0]
-Target Velocities are:  [115.91109915468819, 75.0, 0.0]
+Target Heading Differences are:  [75.0, 90.0, 0.0]
+MTR Setting is:  20
+Target Velocities are:  [31.05828541230249, 4.592425496802574e-15, 0.0]
 Targets were detected in these locations:  [1]
 

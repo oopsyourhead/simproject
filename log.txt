@@ -1,13 +1,14 @@
-16:37:06.836855: target_1 has been created
-16:37:06.837356: target_2 has been created
-16:37:06.837855: target_3 has been created
-16:37:06.838355: aircraft_1 has been created
-16:37:06.838355: the current bar # is:  1
-16:37:06.839856: target_1 Power Changed To 90
-16:37:06.839856: target_2 Power Changed To 50
-16:37:06.839856: target_2 Location Changed To 7
-16:37:06.840382: target_2 Speed Changed To 75
-16:37:06.840382: target_1 Speed Changed To 120
-16:37:06.840856: target_1 Heading Changed To 15
-16:37:06.840856: the current bar # is:  2
-16:37:06.841856: the current bar # is:  3
+15:38:24.065699: target_1 has been created
+15:38:24.065699: target_2 has been created
+15:38:24.066200: target_3 has been created
+15:38:24.066200: aircraft_1 has been created
+15:38:24.066700: the current bar # is:  1
+15:38:24.067700: target_1 Power Changed To 90
+15:38:24.068200: target_2 Power Changed To 50
+15:38:24.068200: target_2 Location Changed To 7
+15:38:24.068700: target_2 Speed Changed To 75
+15:38:24.068700: target_1 Speed Changed To 120
+15:38:24.069200: target_1 Heading Changed To 15
+15:38:24.069200: aircraft_1 Aircraft Heading Changed To 90
+15:38:24.069200: the current bar # is:  2
+15:38:24.070701: the current bar # is:  3

@@ -200,6 +200,7 @@ while current_scan_number <= number_of_scans:
     radar_mode_output = radar_mode
     targets_detected.sort()
     targets_detected_output = targets_detected
+    mtr_setting_output = mtr_setting
 
 ################PRINTING##################################################
 
@@ -219,6 +220,8 @@ while current_scan_number <= number_of_scans:
     print("Target Headings are: ", target_headings_output, file = f)
     print("Target Heading Differences are: ", heading_differences_output)
     print("Target Heading Differences are: ", heading_differences_output, file = f)
+    print("MTR Setting is: ", mtr_setting_output)
+    print("MTR Setting is: ", mtr_setting_output, file = f)
     print("Target Velocities are: ", target_velocities_output)
     print("Target Velocities are: ", target_velocities_output, file = f)
     print("Targets were detected in these locations: ", targets_detected_output)
@@ -237,6 +240,7 @@ while current_scan_number <= number_of_scans:
     target_speeds = target_2.change_speed(75, target_list, target_2.name)
     target_speeds = target_1.change_speed(120, target_list, target_1.name)
     target_headings = target_1.change_heading(15, target_list, target_1.name)
+    aircraft_1.change_aircraft_heading(90, aircraft_1.name)
 
     current_scan_number += 1
 #print(target_powers[0])
