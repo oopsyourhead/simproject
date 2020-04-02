@@ -4,7 +4,7 @@
 #   Sean Tatarka        03/27/2020      0002                Started logging stuff, will log when targets are created, added target name and target heading characteristics
 #   Sean Tatarka        03/30/2020      0003                Finished logging events when creating targets, and changing target characteristics, includes timetags will only change
 #                                                           attribute and log it if the new value is different than the old value
-#
+#   Sean Tatarka        04/02/2020      0004                Added counter that tracks number of target objects created, this is to facilitate looping in sim.py
 #
 #
 #
@@ -13,9 +13,13 @@
 import os, datetime
 
 class Target:
+    number_of_targets = 0
+    target_list = []
+
     def __init__(self, name, location, speed, heading, power):
         daytime = datetime.datetime.now()
         file_name = 'log.txt'
+        Target.number_of_targets += 1
 
         if os.path.getsize(file_name) == 0:
             f2 = open('log.txt', 'w')
