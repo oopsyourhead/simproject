@@ -7,6 +7,6 @@
 ####	implement heading differences between aircraft and target, begin implementing different mode searches (started 3/31/2020)
 ####	implement ability to change aircraft characteristics with function calls in Aircraft Class (started and finished 4/1/2020)
 
-##		next i want to implement a way to automatically track how many target objects you create, so the program can scale automatically
+###		next i want to implement a way to automatically track how many target objects you create, so the program can scale automatically
 
 ####	in the future implement 2 dimensions for targets, beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes
