@@ -1,7 +1,7 @@
 ############################################################################################################################################################################
 #   Developer           Date            Version             Comment
 #   Sean Tatarka        03/31/2020      0001                Create aircraft object with different aspects
-#
+#	Sean Tatarka		04/03/2020		0002				Protect heading on init and change_heading to -359 to 359 degrees.
 #
 #
 #
@@ -14,6 +14,16 @@ class Aircraft:
 	def __init__(self, name, heading, speed, altitude, ownship_location):
 		daytime = datetime.datetime.now()
 		file_name = 'log.txt'
+
+		while heading >= 360 or heading <= -360:
+			if heading >= 360:
+				heading -= 360
+			elif heading <= -360:
+				heading += 360
+
+			f2 = open('log.txt', 'w')
+			print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 360 and has been changed to: ", heading, file = f2)
+			f2.close()
 
 		if os.path.getsize(file_name) == 0:
 			f2 = open('log.txt', 'w')
@@ -64,6 +74,16 @@ class Aircraft:
 	def change_aircraft_heading(self, new_heading, name):
 		daytime = datetime.datetime.now()
 		file_name = 'log.txt'
+
+		while new_heading >= 360 or new_heading <= -360:
+			if new_heading >= 360:
+				new_heading -= 360
+			elif new_heading <= -360:
+				new_heading += 360
+
+			f2 = open('log.txt', 'a')
+			print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 360 and has been changed to: ", new_heading, file = f2)
+			f2.close()
 
 		if self.heading != new_heading:
 			self.heading = new_heading

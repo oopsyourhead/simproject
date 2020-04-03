@@ -61,8 +61,6 @@ def calc_velocities(target_speeds, heading_differences, number_of_targets):  #ca
     target_velocities = []
 
     while n < number_of_targets:
-        #print(math.cos(math.radians(heading_differences[n])))
-        #print(math.cos(math.radians(heading_differences[n])), file = f)
         target_velocities.append((target_1.speed * math.cos(math.radians(heading_differences[n]))))
         n += 1
 
@@ -82,16 +80,19 @@ def calc_heading_difference(target_headings, aircraft_heading, number_of_targets
 
 ######################Scenario###############################################
 target_1 = Target("target_1", 1, 100, 0, 100)                     #(name, location, speed, heading, power)
-target_2 = Target("target_2", 5, 100, 180, 100)
+target_2 = Target("target_2", 5, 100, 900, 100)
 target_3 = Target("target_3", 9, 100, 90, 100)
 target_4 = Target("target_4", 4, 100, 270, 100)
 
 print("number of targets is: ", Target.number_of_targets)
 print("number of targets is: ", Target.number_of_targets, file = f)
 
-aircraft_1 = Aircraft("aircraft_1", 0, 100, 10000, 0)           #(name, heading, speed, altitude, ownship_location)
+aircraft_1 = Aircraft("aircraft_1", 720, 100, 10000, 0)           #(name, heading, speed, altitude, ownship_location)
 
-target_list = [target_1, target_2, target_3, target_4]
+target_list = Target.target_list
+#target_list = [target_1, target_2, target_3, target_4]
+
+#print(target_list, file = f)
 
 target_names = [o.name for o in target_list]
 target_locations = [o.location for o in target_list]
@@ -249,10 +250,11 @@ while current_scan_number <= number_of_scans:
     target_powers = target_1.change_power(90, target_list, target_1.name)
     target_powers = target_2.change_power(50, target_list, target_2.name)
     target_locations = target_2.change_location(7, target_list, target_2.name)
-    target_speeds = target_2.change_speed(50, target_list, target_2.name)
-    target_speeds = target_1.change_speed(50, target_list, target_1.name)
-    target_headings = target_1.change_heading(15, target_list, target_1.name)
-    aircraft_1.change_aircraft_heading(90, aircraft_1.name)
+    target_speeds = target_2.change_speed(40, target_list, target_2.name)
+    target_speeds = target_1.change_speed(65, target_list, target_1.name)
+    target_headings = target_1.change_heading(375, target_list, target_1.name)
+    target_headings = target_3.change_heading(120, target_list, target_3.name)
+    aircraft_1.change_aircraft_heading(450, aircraft_1.name)
 
     current_scan_number += 1
 #print(target_powers[0])

@@ -8,6 +8,8 @@
 ####	implement ability to change aircraft characteristics with function calls in Aircraft Class (started and finished 4/1/2020)
 
 ###		next i want to implement a way to automatically track how many target objects you create, so the program can scale automatically (started and finished 04/02/2020)
-###		improve automatic scaling to use function call to create target list?? protect trig function inputs to be between -360 and 360 degrees (-2xPi to 2xPi)?
+###		improve automatic scaling to use function call to create target list?? protect trig function inputs to be between -360 and 360 degrees (-2xPi to 2xPi)? (target list completed 	
+###   	4/3/2020)
+###		next, make another output file that only outputs the display format
 
 ####	in the future implement 2 dimensions for targets, beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes

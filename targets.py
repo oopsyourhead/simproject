@@ -1,14 +1,14 @@
-############################################################################################################################################################################
+####################################################################################################################################################################################
 #   Developer           Date            Version             Comment
 #   Sean Tatarka        03/23/2020      0001                Initial commit, create target object, change target aspects using functions
 #   Sean Tatarka        03/27/2020      0002                Started logging stuff, will log when targets are created, added target name and target heading characteristics
 #   Sean Tatarka        03/30/2020      0003                Finished logging events when creating targets, and changing target characteristics, includes timetags will only change
 #                                                           attribute and log it if the new value is different than the old value
 #   Sean Tatarka        04/02/2020      0004                Added counter that tracks number of target objects created, this is to facilitate looping in sim.py
+#   Sean Tatarka        04/03/2020      0005                Changed target_list to be created from object from targets.py, sim.py assigns the list of targets after they're created
+#                                                           Added a limit for target headings to be between -360 and 360 degrees, may change this to -180 to 180 soon
 #
-#
-#
-#############################################################################################################################################################################
+#####################################################################################################################################################################################
 
 import os, datetime
 
@@ -20,6 +20,16 @@ class Target:
         daytime = datetime.datetime.now()
         file_name = 'log.txt'
         Target.number_of_targets += 1
+
+        while heading >= 360 or heading <= -360:
+            if heading >= 360:
+                heading -= 360
+            elif heading <= -360:
+                heading += 360
+
+            f2 = open('log.txt', 'w')
+            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 360 and has been changed to: ", heading, file = f2)
+            f2.close()
 
         if os.path.getsize(file_name) == 0:
             f2 = open('log.txt', 'w')
@@ -35,6 +45,8 @@ class Target:
         self.heading = heading                              #heading is in degrees
         self.power = power
         self.name = name
+
+        Target.target_list.append(self)
 
     def change_location(self, new_location, target_list, name):
         daytime = datetime.datetime.now()
@@ -102,6 +114,16 @@ class Target:
     def change_heading(self, new_heading, target_list, name):
         daytime = datetime.datetime.now()
         file_name = 'log.txt'
+
+        while new_heading >= 360 or new_heading <= -360:
+            if new_heading >= 360:
+                new_heading -= 360
+            elif new_heading <= -360:
+                new_heading += 360
+
+            f2 = open('log.txt', 'a')
+            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 360 and has been changed to: ", new_heading, file = f2)
+            f2.close()
 
         if self.heading != new_heading:
             self.heading = new_heading
