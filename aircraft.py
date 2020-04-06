@@ -2,6 +2,13 @@
 #   Developer           Date            Version             Comment
 #   Sean Tatarka        03/31/2020      0001                Create aircraft object with different aspects
 #	Sean Tatarka		04/03/2020		0002				Protect heading on init and change_heading to -359 to 359 degrees.
+#   Sean Tatarka        04/06/2020      0006                Change trig protection to use -180 to 180 for headings
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -15,10 +22,10 @@ class Aircraft:
 		daytime = datetime.datetime.now()
 		file_name = 'log.txt'
 
-		while heading >= 360 or heading <= -360:
-			if heading >= 360:
+		while heading > 180 or heading < -180:
+			if heading > 180:
 				heading -= 360
-			elif heading <= -360:
+			elif heading < -180:
 				heading += 360
 
 			f2 = open('log.txt', 'w')
@@ -75,10 +82,10 @@ class Aircraft:
 		daytime = datetime.datetime.now()
 		file_name = 'log.txt'
 
-		while new_heading >= 360 or new_heading <= -360:
-			if new_heading >= 360:
+		while new_heading > 180 or new_heading < -180:
+			if new_heading > 180:
 				new_heading -= 360
-			elif new_heading <= -360:
+			elif new_heading < -180:
 				new_heading += 360
 
 			f2 = open('log.txt', 'a')

@@ -7,6 +7,15 @@
 #   Sean Tatarka        04/02/2020      0004                Added counter that tracks number of target objects created, this is to facilitate looping in sim.py
 #   Sean Tatarka        04/03/2020      0005                Changed target_list to be created from object from targets.py, sim.py assigns the list of targets after they're created
 #                                                           Added a limit for target headings to be between -360 and 360 degrees, may change this to -180 to 180 soon
+#   Sean Tatarka        04/06/2020      0006                Change trig protection to use -180 to 180 for headings
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #####################################################################################################################################################################################
 
@@ -21,10 +30,10 @@ class Target:
         file_name = 'log.txt'
         Target.number_of_targets += 1
 
-        while heading >= 360 or heading <= -360:
-            if heading >= 360:
+        while heading > 180 or heading < -180:
+            if heading > 180:
                 heading -= 360
-            elif heading <= -360:
+            elif heading < -180:
                 heading += 360
 
             f2 = open('log.txt', 'w')
@@ -115,10 +124,10 @@ class Target:
         daytime = datetime.datetime.now()
         file_name = 'log.txt'
 
-        while new_heading >= 360 or new_heading <= -360:
-            if new_heading >= 360:
+        while new_heading > 180 or new_heading < -180:
+            if new_heading > 180:
                 new_heading -= 360
-            elif new_heading <= -360:
+            elif new_heading < -180:
                 new_heading += 360
 
             f2 = open('log.txt', 'a')

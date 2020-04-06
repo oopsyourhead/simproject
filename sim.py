@@ -6,6 +6,16 @@
 #   Sean Tatarka        03/30/2020      0004                Updated class function calls to include object names to support logging functions
 #   Sean Tatarka        03/31/2020      0005                Added Aircraft class objects, incorporated aircraft heading and mode into target detection
 #   Sean Tatarka        04/02/2020      0006                Changed function calls to use loops based on number of Target objects created, fixed trig calculations, updated functions
+#   Sean Tatarka        04/03/2020      0007                Updated calls to test trig limitations, and implement new list from targets class
+#   Sean Tatarka        04/06/2020      0008                Updated target and aircraft class objects to test new trig protection for -180 to 180
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #######################################################################################################################################################################################
@@ -44,7 +54,7 @@ elevation_angle = 0
 
 
 ######################Radar execution controls#####################
-radar_mode = NORMAL_SCAN
+radar_mode = HIGH_PRF_AIR_TO_AIR_SEARCH
 mtr_setting = 20
 detection_threshold = 50
 
@@ -71,7 +81,7 @@ def calc_heading_difference(target_headings, aircraft_heading, number_of_targets
     heading_differences = []
 
     while m < number_of_targets:
-        heading_differences.append((aircraft_heading - target_headings[m]))
+        heading_differences.append((target_headings[m] - aircraft_heading))
         m += 1
 
     return heading_differences
@@ -79,7 +89,7 @@ def calc_heading_difference(target_headings, aircraft_heading, number_of_targets
             
 
 ######################Scenario###############################################
-target_1 = Target("target_1", 1, 100, 0, 100)                     #(name, location, speed, heading, power)
+target_1 = Target("target_1", 1, 100, 370, 100)                     #(name, location, speed, heading, power)
 target_2 = Target("target_2", 5, 100, 900, 100)
 target_3 = Target("target_3", 9, 100, 90, 100)
 target_4 = Target("target_4", 4, 100, 270, 100)
@@ -87,7 +97,7 @@ target_4 = Target("target_4", 4, 100, 270, 100)
 print("number of targets is: ", Target.number_of_targets)
 print("number of targets is: ", Target.number_of_targets, file = f)
 
-aircraft_1 = Aircraft("aircraft_1", 720, 100, 10000, 0)           #(name, heading, speed, altitude, ownship_location)
+aircraft_1 = Aircraft("aircraft_1", 365, 100, 10000, 0)           #(name, heading, speed, altitude, ownship_location)
 
 target_list = Target.target_list
 #target_list = [target_1, target_2, target_3, target_4]
@@ -160,9 +170,9 @@ while current_scan_number <= number_of_scans:
     while ((current_scan_location <= scan_boundry_right) and (current_scan_location >= scan_boundry_left)):
         if (current_scan_location in target_locations):
             while (a < len(target_powers)): 
-                if (target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and math.fabs(target_velocities[a]) >= mtr_setting    #speed filtering
-                    and ((heading_differences[a] >= 15 and (radar_mode == HIGH_PRF_AIR_TO_AIR_SEARCH)                                                   #heading check in high PRF
-                    or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH or radar_mode == NORMAL_SCAN))):                                                         #modes
+                if (target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and math.fabs(target_velocities[a]) >= mtr_setting     #speed filtering
+                    and ((math.fabs(heading_differences[a]) >= 15 and (radar_mode == HIGH_PRF_AIR_TO_AIR_SEARCH)                                                    #heading check in high PRF
+                    or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH or radar_mode == NORMAL_SCAN))):                                                                     #modes
                     print('#',"\t", end="", flush=True)
                     print('#',"\t", end="", flush=True, file = f)
                     targets_detected.append(current_scan_location)
