@@ -11,6 +11,6 @@
 ###		improve automatic scaling to use function call to create target list?? protect trig function inputs to be between -360 and 360 degrees (-2xPi to 2xPi)? (completed 	
 ###   	4/3/2020)
 ###		implement -180 to 180 degrees heading protection (started 04/06/2020)
-###		next, make another output file that only outputs the display format
+##		next, make another output file that only outputs the display format
 
 ####	in the future implement 2 dimensions for targets, beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes
