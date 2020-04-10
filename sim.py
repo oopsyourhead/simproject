@@ -23,7 +23,8 @@
 #SETUP
 from targets import Target
 from aircraft import Aircraft
-import math, os, datetime
+from math import cos, fabs, radians
+import os, datetime
 
 
 f = open('output.txt', 'w')
@@ -71,7 +72,7 @@ def calc_velocities(target_speeds, heading_differences, number_of_targets):  #ca
     target_velocities = []
 
     while n < number_of_targets:
-        target_velocities.append((target_1.speed * math.cos(math.radians(heading_differences[n]))))
+        target_velocities.append((target_1.speed * cos(radians(heading_differences[n]))))
         n += 1
 
     return target_velocities
@@ -170,8 +171,8 @@ while current_scan_number <= number_of_scans:
     while ((current_scan_location <= scan_boundry_right) and (current_scan_location >= scan_boundry_left)):
         if (current_scan_location in target_locations):
             while (a < len(target_powers)): 
-                if (target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and math.fabs(target_velocities[a]) >= mtr_setting     #speed filtering
-                    and ((math.fabs(heading_differences[a]) >= 15 and (radar_mode == HIGH_PRF_AIR_TO_AIR_SEARCH)                                                    #heading check in high PRF
+                if (target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and fabs(target_velocities[a]) >= mtr_setting     #speed filtering
+                    and ((fabs(heading_differences[a]) >= 15 and (radar_mode == HIGH_PRF_AIR_TO_AIR_SEARCH)                                                    #heading check in high PRF
                     or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH or radar_mode == NORMAL_SCAN))):                                                                     #modes
                     print('#',"\t", end="", flush=True)
                     print('#',"\t", end="", flush=True, file = f)
