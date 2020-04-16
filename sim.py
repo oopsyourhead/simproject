@@ -29,8 +29,12 @@ import os, datetime
 
 f = open('output.txt', 'w')
 f2 = open('log.txt', 'w')
+f3 = open('display.txt', 'w')
 f2.write("")
 f2.close()
+f3.write("")
+f3.close()
+f3 = open('display.txt', 'w')
 
 
 
@@ -160,10 +164,12 @@ while current_scan_number <= number_of_scans:
     while ((i < len(scan_swath)) & (i >= 0)):
         print(scan_swath[i], "\t", end ="", flush=True)
         print(scan_swath[i], "\t", end ="", flush=True, file = f)
+        print(scan_swath[i], "\t", end ="", flush=True, file = f3)
         i += scanspeed
 
     print("")
     print("", file = f)
+    print("", file = f3)
 
     a = 0
 
@@ -176,6 +182,7 @@ while current_scan_number <= number_of_scans:
                     or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH or radar_mode == NORMAL_SCAN))):                                                                     #modes
                     print('#',"\t", end="", flush=True)
                     print('#',"\t", end="", flush=True, file = f)
+                    print('#',"\t", end="", flush=True, file = f3)
                     targets_detected.append(current_scan_location)
                     a += 1
                     break
@@ -188,6 +195,7 @@ while current_scan_number <= number_of_scans:
                     or heading_differences[a] < 15):
                     print('=', "\t", end="", flush=True)
                     print('=', "\t", end="", flush=True, file = f)
+                    print('=', "\t", end="", flush=True, file = f3)
                     a += 1
                     break 
                 else:
@@ -195,6 +203,7 @@ while current_scan_number <= number_of_scans:
         else:
             print('=', "\t", end="", flush=True)
             print('=', "\t", end="", flush=True, file = f)
+            print('=', "\t", end="", flush=True, file = f3)
 
                     
         if scan_direction == 1:
@@ -230,6 +239,8 @@ while current_scan_number <= number_of_scans:
 
     print("")
     print("", file = f)
+    print("", file = f3)
+    print("", file = f3)
     print("The current Radar Mode is: ", radar_mode_output)
     print("The current Radar Mode is: ", radar_mode_output, file = f)
     print("Target Locations Are: ", target_location_output)
@@ -273,6 +284,7 @@ while current_scan_number <= number_of_scans:
 #print(target_powers[2])
 
 f.close()
+f3.close()
 
 #power check implemented and working
 #next  maybe make scenario control it's own file then import
