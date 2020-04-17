@@ -54,8 +54,8 @@ mapcenter = 11
 scanwidth = 10
 scanspeed = 1
 scan_direction = 1         #1 = left to right, 2 = right to left
-number_of_scans = 2
-number_of_bars = 4
+number_of_scans = 1
+number_of_bars = 2
 elevation_angle = 0
 azimuth_angle = 0
 
@@ -126,9 +126,10 @@ half_power_beam_width = beam_width / 2
 ##################SCAN EXECUTION#############################
 while current_scan_number <= number_of_scans:
     current_bar_number = 1
-    print("current scan number: ", current_scan_number, file = f)
-    print("current bar number: ", current_bar_number, file = f)
+   
+    #print("current bar number: ", current_bar_number, file = f)
     while current_bar_number <= number_of_bars:
+        print("current scan direction: ", scan_direction, file = f)
         daytime = datetime.datetime.now()
 
         print("the current scan # is: ",current_scan_number)
@@ -138,23 +139,23 @@ while current_scan_number <= number_of_scans:
         print("the current bar # is: ",current_bar_number, file = f)
 
         f2 = open('log.txt', 'a')
-        print(daytime.strftime("%H:%M:%S.%f:"), "the current bar # is: ", current_scan_number, file = f2)
+        print(daytime.strftime("%H:%M:%S.%f:"), "the current bar # is: ", current_bar_number, file = f2)
         f2.close()
         
         heading_differences = calc_heading_difference(target_headings, aircraft_1.heading, Target.number_of_targets)
         target_velocities = calc_velocities(target_speeds, heading_differences, Target.number_of_targets)
         targets_detected = []
 
-        if (scan_direction == 1):
-            starting_scan_location = mapcenter - scanwidth
+        if (scan_direction == 1):                                                   #had to gimmick this to get the targets to show up in the right location
+            starting_scan_location = mapcenter - scanwidth                          #the program would think that targets show up in 4th location instead of location 4    
+            current_scan_location = starting_scan_location                          # 1 2 3 4 5 6 7 8 9                 9 8 7 6 5 4 3 2 1  
+            scan_boundry_left = mapcenter - scanwidth                               # = = = + = = = = =                 = = = = = + = = = 
+            scan_boundry_right = mapcenter + scanwidth                              
+                                                                                    #it should look like this 
+        else:                                                                       # 1 2 3 4 5 6 7 8 9                 9 8 7 6 5 4 3 2 1
+            starting_scan_location = mapcenter - scanwidth                          # = = = + = = = = =                 = = = + = = = = =
             current_scan_location = starting_scan_location
-            scan_boundry_left = mapcenter - scanwidth
-            scan_boundry_right = mapcenter + scanwidth
-
-        else:
-            starting_scan_location = mapcenter + scanwidth
-            current_scan_location = starting_scan_location
-            scan_boundry_left = mapcenter - scanwidth
+            scan_boundry_left = mapcenter - scanwidth                               #because location 4 from left to right is = to location 6 from right to left
             scan_boundry_right = mapcenter + scanwidth
             
         scan_swath = list(range(scan_boundry_left, scan_boundry_right + 1))
@@ -177,8 +178,10 @@ while current_scan_number <= number_of_scans:
         while ((i < len(scan_swath)) and (i >= 0)):
             print(scan_swath[i], "\t", end ="", flush=True)
             print(scan_swath[i], "\t", end ="", flush=True, file = f)
+
             if display_count == 1:
                 print(scan_swath[i], "\t", end ="", flush=True, file = f3)
+
             i += scanspeed
             
 
@@ -220,13 +223,8 @@ while current_scan_number <= number_of_scans:
                 print('=', "\t", end="", flush=True, file = f)
                 print('=', "\t", end="", flush=True, file = f3)
 
-                        
-            if scan_direction == 1:
-                current_scan_location += scanspeed
-                a = 0
-            else:
-                current_scan_location -= scanspeed
-                a = 0
+            current_scan_location += scanspeed
+            a = 0
 
 
         if scan_direction == 1:
@@ -249,6 +247,7 @@ while current_scan_number <= number_of_scans:
         targets_detected.sort()
         targets_detected_output = targets_detected
         mtr_setting_output = mtr_setting
+        current_bar_number_output = current_bar_number
 
     ################PRINTING##################################################
 
