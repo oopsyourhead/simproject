@@ -13,6 +13,7 @@
 ###		implement -180 to 180 degrees heading protection (started 04/06/2020)
 ###		next, make another output file that only outputs the display format (started 4/16/2020 finished 4/17/2020)
 ###		implement multiple bar scans/2 dimensions (started 4/17/2020)
-			<p> another thing to implement is the ability to change map centers easier and more intuitively</p>
+			another thing to implement is the ability to change map centers easier and more intuitively (4/20/2020)
 
+			
 ####	in the future implement 2 dimensions for targets, beam structure, target range, target elevation, target xyz, add in elevation angles, bars, different modes
