@@ -53,8 +53,8 @@ TWS = 5
 mapcenter = 11
 scanwidth = 10
 scanspeed = 1
-scan_direction = 1         #1 = left to right, 2 = right to left
-number_of_scans = 1
+scan_direction = 2         #1 = left to right, 2 = right to left
+number_of_scans = 3
 number_of_bars = 2
 elevation_angle = 0
 azimuth_angle = 0
@@ -161,8 +161,8 @@ while current_scan_number <= number_of_scans:
         scan_swath = list(range(scan_boundry_left, scan_boundry_right + 1))
 
 
-        if scan_direction != 1:
-            scan_swath.reverse()
+        #if scan_direction != 1:
+        #    scan_swath.reverse()
 
         print('scan_boundry_left: ', scan_boundry_left)
         print('scan_boundry_left: ', scan_boundry_left, file = f)
@@ -174,6 +174,7 @@ while current_scan_number <= number_of_scans:
         
         if display_count == 1:
             print("\t", end ="", flush=True, file = f3)
+            print("", file = f3)
 
         while ((i < len(scan_swath)) and (i >= 0)):
             print(scan_swath[i], "\t", end ="", flush=True)
@@ -292,8 +293,17 @@ while current_scan_number <= number_of_scans:
         target_headings = target_3.change_heading(120, target_list, target_3.name)
         aircraft_1.change_aircraft_heading(450, aircraft_1.name)
 
+
+
+    ###############UPDATE MAP CHARACTERISTICS###################################
+           
+
         current_bar_number += 1
         display_count += 1
+
+
+
+    mapcenter -= 1
     current_scan_number += 1
     display_count = 1
 

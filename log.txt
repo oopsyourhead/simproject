@@ -1,16 +1,28 @@
-17:02:53.951233: aircraft_1 heading was bigger than 360 and has been changed to:  5
-17:02:53.951233: aircraft_1 has been created
-17:02:53.952233: the current bar # is:  1
-17:02:53.954234: target_1 Power Changed To 90
-17:02:53.954234: target_2 Power Changed To 50
-17:02:53.955234: target_2 Location Changed To 7
-17:02:53.955234: target_2 Speed Changed To 40
-17:02:53.955234: target_1 Speed Changed To 65
-17:02:53.955234: target_1 heading was bigger than 360 and has been changed to:  15
-17:02:53.955234: target_1 Heading Changed To 15
-17:02:53.956234: target_3 Heading Changed To 120
-17:02:53.956234: aircraft_1 heading was bigger than 360 and has been changed to:  90
-17:02:53.956234: aircraft_1 Aircraft Heading Changed To 90
-17:02:53.956234: the current bar # is:  2
-17:02:53.958235: target_1 heading was bigger than 360 and has been changed to:  15
-17:02:53.958235: aircraft_1 heading was bigger than 360 and has been changed to:  90
+16:48:12.382553: aircraft_1 heading was bigger than 360 and has been changed to:  5
+16:48:12.382553: aircraft_1 has been created
+16:48:12.382553: the current bar # is:  1
+16:48:12.384554: target_1 Power Changed To 90
+16:48:12.385554: target_2 Power Changed To 50
+16:48:12.385554: target_2 Location Changed To 7
+16:48:12.385554: target_2 Speed Changed To 40
+16:48:12.385554: target_1 Speed Changed To 65
+16:48:12.386554: target_1 heading was bigger than 360 and has been changed to:  15
+16:48:12.386554: target_1 Heading Changed To 15
+16:48:12.386554: target_3 Heading Changed To 120
+16:48:12.386554: aircraft_1 heading was bigger than 360 and has been changed to:  90
+16:48:12.386554: aircraft_1 Aircraft Heading Changed To 90
+16:48:12.387555: the current bar # is:  2
+16:48:12.388555: target_1 heading was bigger than 360 and has been changed to:  15
+16:48:12.389555: aircraft_1 heading was bigger than 360 and has been changed to:  90
+16:48:12.389555: the current bar # is:  1
+16:48:12.391557: target_1 heading was bigger than 360 and has been changed to:  15
+16:48:12.391557: aircraft_1 heading was bigger than 360 and has been changed to:  90
+16:48:12.391557: the current bar # is:  2
+16:48:12.393556: target_1 heading was bigger than 360 and has been changed to:  15
+16:48:12.393556: aircraft_1 heading was bigger than 360 and has been changed to:  90
+16:48:12.393556: the current bar # is:  1
+16:48:12.395557: target_1 heading was bigger than 360 and has been changed to:  15
+16:48:12.395557: aircraft_1 heading was bigger than 360 and has been changed to:  90
+16:48:12.395557: the current bar # is:  2
+16:48:12.397558: target_1 heading was bigger than 360 and has been changed to:  15
+16:48:12.397558: aircraft_1 heading was bigger than 360 and has been changed to:  90
