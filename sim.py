@@ -174,7 +174,7 @@ while current_scan_number <= number_of_scans:
         
         if display_count == 1:
             print("\t", end ="", flush=True, file = f3)
-            print("", file = f3)
+            #print("", file = f3)
 
         while ((i < len(scan_swath)) and (i >= 0)):
             print(scan_swath[i], "\t", end ="", flush=True)

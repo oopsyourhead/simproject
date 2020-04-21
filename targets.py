@@ -37,7 +37,7 @@ class Target:
                 heading += 360
 
             f2 = open('log.txt', 'w')
-            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 360 and has been changed to: ", heading, file = f2)
+            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 180 and has been changed to: ", heading, file = f2)
             f2.close()
 
         if os.path.getsize(file_name) == 0:
@@ -131,7 +131,7 @@ class Target:
                 new_heading += 360
 
             f2 = open('log.txt', 'a')
-            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 360 and has been changed to: ", new_heading, file = f2)
+            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 180 and has been changed to: ", new_heading, file = f2)
             f2.close()
 
         if self.heading != new_heading:
