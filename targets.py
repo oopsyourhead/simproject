@@ -26,8 +26,11 @@ class Target:
     target_list = []
 
     def __init__(self, name, location, speed, heading, power):
+        old_heading = heading
         daytime = datetime.datetime.now()
-        file_name = 'log.txt'
+        f2 = open('log.txt', 'a')
+        print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
+        #file_name = 'log.txt'
         Target.number_of_targets += 1
 
         while heading > 180 or heading < -180:
@@ -36,26 +39,21 @@ class Target:
             elif heading < -180:
                 heading += 360
 
-            f2 = open('log.txt', 'w')
-            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 180 and has been changed to: ", heading, file = f2)
-            f2.close()
-
-        if os.path.getsize(file_name) == 0:
-            f2 = open('log.txt', 'w')
-            print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
-        else:
-            f2 = open('log.txt', 'a')
-            print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
-
-        f2.close()
+        if old_heading != heading:
+            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was", old_heading, "and has been changed to: ", heading, file = f2)
 
         self.location = location                            #right now location is 1 dimension
         self.speed = speed
         self.heading = heading                              #heading is in degrees
         self.power = power
         self.name = name
-
-        Target.target_list.append(self)
+                                                                                                                                        #if os.path.getsize(file_name) == 0:
+                                                                                                                                        #    f2 = open('log.txt', 'w')                                                                                                
+                                                                                                                                        #    print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
+        f2.close()                                                                                                                      #else:
+        Target.target_list.append(self)                                                                                                 #    f2 = open('log.txt', 'a')
+                                                                                                                                        #    print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
+                                                                                                                                        #    print("target else case being run here:")
 
     def change_location(self, new_location, target_list, name):
         daytime = datetime.datetime.now()
@@ -123,6 +121,7 @@ class Target:
     def change_heading(self, new_heading, target_list, name):
         daytime = datetime.datetime.now()
         file_name = 'log.txt'
+        print_heading = new_heading
 
         while new_heading > 180 or new_heading < -180:
             if new_heading > 180:
@@ -130,9 +129,9 @@ class Target:
             elif new_heading < -180:
                 new_heading += 360
 
-            f2 = open('log.txt', 'a')
-            print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 180 and has been changed to: ", new_heading, file = f2)
-            f2.close()
+        f2 = open('log.txt', 'a')
+        print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was", print_heading, "and has been changed to: ", new_heading, file = f2)
+        f2.close()
 
         if self.heading != new_heading:
             self.heading = new_heading

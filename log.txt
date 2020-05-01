@@ -1,28 +1,42 @@
-22:20:49.133738: aircraft_1 heading was bigger than 180 and has been changed to:  5
-22:20:49.133738: aircraft_1 has been created
-22:20:49.134738: the current bar # is:  1
-22:20:49.136730: target_1 Power Changed To 90
-22:20:49.136730: target_2 Power Changed To 50
-22:20:49.137730: target_2 Location Changed To 7
-22:20:49.137730: target_2 Speed Changed To 40
-22:20:49.137730: target_1 Speed Changed To 65
-22:20:49.137730: target_1 heading was bigger than 180 and has been changed to:  15
-22:20:49.137730: target_1 Heading Changed To 15
-22:20:49.138738: target_3 Heading Changed To 120
-22:20:49.138738: aircraft_1 heading was bigger than 180 and has been changed to:  90
-22:20:49.138738: aircraft_1 Aircraft Heading Changed To 90
-22:20:49.138738: the current bar # is:  2
-22:20:49.140739: target_1 heading was bigger than 180 and has been changed to:  15
-22:20:49.140739: aircraft_1 heading was bigger than 180 and has been changed to:  90
-22:20:49.140739: the current bar # is:  1
-22:20:49.142740: target_1 heading was bigger than 180 and has been changed to:  15
-22:20:49.142740: aircraft_1 heading was bigger than 180 and has been changed to:  90
-22:20:49.143740: the current bar # is:  2
-22:20:49.144740: target_1 heading was bigger than 180 and has been changed to:  15
-22:20:49.144740: aircraft_1 heading was bigger than 180 and has been changed to:  90
-22:20:49.144740: the current bar # is:  1
-22:20:49.146741: target_1 heading was bigger than 180 and has been changed to:  15
-22:20:49.146741: aircraft_1 heading was bigger than 180 and has been changed to:  90
-22:20:49.146741: the current bar # is:  2
-22:20:49.148741: target_1 heading was bigger than 180 and has been changed to:  15
-22:20:49.148741: aircraft_1 heading was bigger than 180 and has been changed to:  90
+16:20:25.118939: aircraft_1 heading was 365 and has been changed to  5
+16:20:25.118939: aircraft_1 has been created
+16:20:25.118939: target_1 has been created
+16:20:25.118939: target_1 heading was 370 and has been changed to:  10
+16:20:25.118939: target_2 has been created
+16:20:25.118939: target_2 heading was 900 and has been changed to:  180
+16:20:25.119939: target_3 has been created
+16:20:25.119939: target_4 has been created
+16:20:25.119939: target_4 heading was 270 and has been changed to:  -90
+16:20:25.119939: the current bar # is:  1
+16:20:25.121940: target_1 Power Changed To 90
+16:20:25.121940: target_2 Power Changed To 50
+16:20:25.121940: target_2 Location Changed To 7
+16:20:25.122939: target_2 Speed Changed To 40
+16:20:25.122939: target_1 Speed Changed To 65
+16:20:25.122939: target_1 heading was 375 and has been changed to:  15
+16:20:25.122939: target_1 Heading Changed To 15
+16:20:25.123940: target_3 heading was 120 and has been changed to:  120
+16:20:25.123940: target_3 Heading Changed To 120
+16:20:25.123940: aircraft_1 Aircraft Heading Changed To 95
+16:20:25.123940: the current bar # is:  2
+16:20:25.125940: target_1 heading was 375 and has been changed to:  15
+16:20:25.125940: target_3 heading was 120 and has been changed to:  120
+16:20:25.125940: aircraft_1 heading was 185 and has been changed to:  -175
+16:20:25.125940: aircraft_1 Aircraft Heading Changed To -175
+16:20:25.126941: the current bar # is:  1
+16:20:25.128942: target_1 heading was 375 and has been changed to:  15
+16:20:25.128942: target_3 heading was 120 and has been changed to:  120
+16:20:25.128942: aircraft_1 Aircraft Heading Changed To -85
+16:20:25.128942: the current bar # is:  2
+16:20:25.130941: target_1 heading was 375 and has been changed to:  15
+16:20:25.130941: target_3 heading was 120 and has been changed to:  120
+16:20:25.130941: aircraft_1 Aircraft Heading Changed To 5
+16:20:25.131942: the current bar # is:  1
+16:20:25.133943: target_1 heading was 375 and has been changed to:  15
+16:20:25.133943: target_3 heading was 120 and has been changed to:  120
+16:20:25.133943: aircraft_1 Aircraft Heading Changed To 95
+16:20:25.134942: the current bar # is:  2
+16:20:25.136944: target_1 heading was 375 and has been changed to:  15
+16:20:25.136944: target_3 heading was 120 and has been changed to:  120
+16:20:25.136944: aircraft_1 heading was 185 and has been changed to:  -175
+16:20:25.136944: aircraft_1 Aircraft Heading Changed To -175

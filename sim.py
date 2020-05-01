@@ -42,7 +42,7 @@ display_count = 1
 #########################Interface########################
 ##########################Modes######################
 NORMAL_SCAN = 0                     #normal scan is a placeholder mode, doesn't use any of the mode drawbacks, just raw inputs and outputs
-HIGH_PRF_AIR_TO_AIR_SEARCH = 1      #High PRF Search cannot detect trailing targets (those tha have the same headed as the aircraft)
+HIGH_PRF_AIR_TO_AIR_SEARCH = 1      #High PRF Search cannot detect trailing targets (those tha have the same heading as the aircraft)
 MED_PRF_AIR_TO_AIR_SEARCH = 2       #Med PRF search can detect all targets, leading or trailing, but has a lower detection threshold
 INTLV_AIR_TO_AIR_SEARCH = 3         #Interleave search mixes Med and High PRF's, so the advantages and drawbacks match up with each scan
 STT = 4
@@ -64,6 +64,7 @@ azimuth_angle = 0
 radar_mode = HIGH_PRF_AIR_TO_AIR_SEARCH
 mtr_setting = 20
 detection_threshold = 50
+med_prf_detection_threshhold = detection_threshold * 1.5
 
 ##############################CC OUTPUTS##################################
 current_bar_number = 1
@@ -97,6 +98,8 @@ def calc_heading_difference(target_headings, aircraft_heading, number_of_targets
             
 
 ######################Scenario###############################################
+aircraft_1 = Aircraft("aircraft_1", 365, 100, 10000, 0)           #(name, heading, speed, altitude, ownship_location)
+
 target_1 = Target("target_1", 1, 100, 370, 100)                     #(name, location, speed, heading, power)
 target_2 = Target("target_2", 5, 100, 900, 100)
 target_3 = Target("target_3", 9, 100, 90, 100)
@@ -104,8 +107,6 @@ target_4 = Target("target_4", 4, 100, 270, 100)
 
 print("number of targets is: ", Target.number_of_targets)
 print("number of targets is: ", Target.number_of_targets, file = f)
-
-aircraft_1 = Aircraft("aircraft_1", 365, 100, 10000, 0)           #(name, heading, speed, altitude, ownship_location)
 
 target_list = Target.target_list
 #target_list = [target_1, target_2, target_3, target_4]
@@ -126,8 +127,7 @@ half_power_beam_width = beam_width / 2
 ##################SCAN EXECUTION#############################
 while current_scan_number <= number_of_scans:
     current_bar_number = 1
-   
-    #print("current bar number: ", current_bar_number, file = f)
+
     while current_bar_number <= number_of_bars:
         print("current scan direction: ", scan_direction, file = f)
         daytime = datetime.datetime.now()
@@ -144,6 +144,7 @@ while current_scan_number <= number_of_scans:
         
         heading_differences = calc_heading_difference(target_headings, aircraft_1.heading, Target.number_of_targets)
         target_velocities = calc_velocities(target_speeds, heading_differences, Target.number_of_targets)
+
         targets_detected = []
 
         if (scan_direction == 1):                                                   #had to gimmick this to get the targets to show up in the right location
@@ -203,7 +204,8 @@ while current_scan_number <= number_of_scans:
                 while (a < len(target_powers)): 
                     if (target_locations[a] == current_scan_location and target_powers[a] >= detection_threshold and fabs(target_velocities[a]) >= mtr_setting     #speed filtering
                         and ((fabs(heading_differences[a]) >= 15 and (radar_mode == HIGH_PRF_AIR_TO_AIR_SEARCH)                                                    #heading check in high PRF
-                        or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH or radar_mode == NORMAL_SCAN))):                                                                     #modes
+                        or radar_mode == MED_PRF_AIR_TO_AIR_SEARCH and target_powers[a] >= med_prf_detection_threshhold                                            #med prf checks
+                        or radar_mode == NORMAL_SCAN))):                                                                                                           #modes
                         print('#',"\t", end="", flush=True)
                         print('#',"\t", end="", flush=True, file = f)
                         print('#',"\t", end="", flush=True, file = f3)
@@ -254,7 +256,7 @@ while current_scan_number <= number_of_scans:
 
         print("")
         print("", file = f)
-        print("", file = f3)
+        #print("", file = f3)
         #print("", file = f3)
         print("The current Radar Mode is: ", radar_mode_output)
         print("The current Radar Mode is: ", radar_mode_output, file = f)
@@ -291,7 +293,7 @@ while current_scan_number <= number_of_scans:
         target_speeds = target_1.change_speed(65, target_list, target_1.name)
         target_headings = target_1.change_heading(375, target_list, target_1.name)
         target_headings = target_3.change_heading(120, target_list, target_3.name)
-        aircraft_1.change_aircraft_heading(450, aircraft_1.name)
+        aircraft_1.change_aircraft_heading(aircraft_1.heading + 90, aircraft_1.name)
 
 
 
@@ -299,12 +301,15 @@ while current_scan_number <= number_of_scans:
            
 
         current_bar_number += 1
+        #print("", file = f3)
         display_count += 1
 
 
 
     mapcenter -= 1
     current_scan_number += 1
+    print("", file = f3)
+    print("", file = f3)
     display_count = 1
 
 

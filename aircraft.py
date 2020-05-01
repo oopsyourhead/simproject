@@ -18,7 +18,9 @@
 import os, datetime
 
 class Aircraft:
-	def __init__(self, name, heading, speed, altitude, ownship_location):
+	def __init__(self, name, heading, speed, altitude, ownship_location):	
+		f2 = open('log.txt', 'w')
+		old_heading = heading
 		daytime = datetime.datetime.now()
 		file_name = 'log.txt'
 
@@ -28,23 +30,20 @@ class Aircraft:
 			elif heading < -180:
 				heading += 360
 
-			f2 = open('log.txt', 'w')
-			print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 180 and has been changed to: ", heading, file = f2)
-			f2.close()
-
-		if os.path.getsize(file_name) == 0:
-			f2 = open('log.txt', 'w')
-			print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
-		else:
-			f2 = open('log.txt', 'a')
-			print(daytime.strftime("%H:%M:%S.%f:"), name, "has been created", file = f2)
-
-		f2.close()
-
 		self.location = ownship_location
 		self.speed = speed
 		self.heading = heading
 		self.name = name
+
+		if old_heading != heading:
+			print(daytime.strftime("%H:%M:%S.%f:"), self.name, "heading was", old_heading, "and has been changed to ", heading, file = f2)
+
+		if os.path.getsize(file_name) == 0:
+			print(daytime.strftime("%H:%M:%S.%f:"), self.name, "has been created", file = f2)
+		else:
+			print(daytime.strftime("%H:%M:%S.%f:"), self.name, "has been created", file = f2)
+
+		f2.close()
 
 	def change_ownship_location(self, new_location, name):
 		daytime = datetime.datetime.now()
@@ -81,6 +80,7 @@ class Aircraft:
 	def change_aircraft_heading(self, new_heading, name):
 		daytime = datetime.datetime.now()
 		file_name = 'log.txt'
+		print_heading = new_heading
 
 		while new_heading > 180 or new_heading < -180:
 			if new_heading > 180:
@@ -88,9 +88,12 @@ class Aircraft:
 			elif new_heading < -180:
 				new_heading += 360
 
-			f2 = open('log.txt', 'a')
-			print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was bigger than 180 and has been changed to: ", new_heading, file = f2)
-			f2.close()
+		f2 = open('log.txt', 'a')
+
+		if print_heading != new_heading:
+			print(daytime.strftime("%H:%M:%S.%f:"), name, "heading was", print_heading,"and has been changed to: ", new_heading, file = f2)
+		
+		f2.close()
 
 		if self.heading != new_heading:
 			self.heading = new_heading
